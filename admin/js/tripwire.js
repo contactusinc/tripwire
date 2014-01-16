@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 	loadOverview();
+	setInterval(updateSummaries,10000);
+	setInterval(resetOverview,10000);
 } )
 
 $.ajaxSetup ({
