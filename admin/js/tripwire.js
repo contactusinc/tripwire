@@ -43,8 +43,7 @@ function loadOverview()
 }
 function updateSummaries()
 {
-  var loadUrl = "http://10.200.20.160:4567/getsummaryjson/";
-  //var loadUrl = "sinatra_proxy.php?p=/getsummaryjson/";
+  var loadUrl = ["http://",location.host,":4567/getsummaryjson/"].join("");
 
   $.getJSON( loadUrl, function( data ) {
     $.each( data, function( key, val ) {
