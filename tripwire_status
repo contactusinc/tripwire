@@ -1,0 +1,17 @@
+#!/usr/local/bin/ruby
+puts
+puts "**checking all /etc/init.d/tripwire* services**"
+puts
+Dir.foreach('/etc/init.d') do |item|
+  next if item == '.' or item == '..'
+  # do work on real items
+  if (item.match(/^tripwire/))
+   	#item = "tripwire_mon_saml"
+    	#`service #{item} status`
+	cmd = "service " << item <<" status"
+    	print cmd 
+        print " ==> "
+    	system("service " << item <<" status")
+	puts
+  end
+end

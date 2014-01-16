@@ -1,0 +1,51 @@
+<html><head>
+
+      <script type="text/javascript" language="javascript" src="js/jquery-1.10.2.js"></script>
+      <script type="text/javascript" language="javascript" src="js/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+<script>
+
+$(document).ready(function() {
+	$('#datatb').dataTable( {
+		"bProcessing": true,
+		"sAjaxSource": 'get_status_json.php'
+	} );
+} )
+
+
+</script>
+
+</head><body>
+
+   <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatb">
+                      <thead>
+                      <tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>f</th>
+<th>g</th>
+<th>h</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+                      </tbody>
+                      <tfoot>
+                      <tr>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>f</th>
+<th>g</th>
+<th>h</th>
+                      </tr>  </tfoot>
+                  </table>
+
+
+</body>
+
+</html>

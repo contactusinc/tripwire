@@ -1,0 +1,5 @@
+<?php
+//print("http://10.200.20.160:4567".$_GET["p"]);
+$jsonData = file_get_contents("http://10.200.20.160:4567".$_GET["p"]);
+print $jsonData;
+?>
