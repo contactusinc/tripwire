@@ -42,19 +42,38 @@ get '/' do
 	/getstatusjsonp/ - an jsonp array of all statuses formatted for jquery datatables<br>
 	<a href='/setstatus/?appname=instructions_test&status=G&status_text=&customer=test&category=test&description=Is%20the%20tripwire%20system%20running%20and%20responding&expires=86400'>/setstatus/</a> - sets the status if a tigger. Requires params appname & status. Optional: status_text,description,expires,category,customer<br>
 	<a href='/removestatus/?appname=instructions_test'>/removestatus/</a> - Removes a status form the system <i>(Note: Is another system sends a setstatus message, the monitor will be recreated automatically</i><br>
+	<a href='/delaystatus/?appname=instructions_test'>/delaystatus/</a> - Stops monitor for a priod of time<br>
 "
 end
 
 
 
 get '/setstatus/' do
-  db=setup_db
-  #content_type :json
-  #{"params" => params}.to_json
-
   halt raiseParameterMissing("appname") if params[:appname].nil?
   halt raiseParameterMissing("status") if params[:status].nil?
   halt raiseBadStatusValue() unless ["R","Y","G","I"].include?(params[:status])
+
+  setstatus_base
+end
+
+
+get '/delaystatus/' do
+  halt raiseParameterMissing("appname") if params[:appname].nil?
+
+  expires=mysql_escape(params[:expires])
+  params[:status_text] = "Alarm Turned Off"
+  params[:status] = "D"
+
+  if expires.nil? || expires.empty?
+      expires="86400"
+  end
+
+  setstatus_base
+end
+
+
+def setstatus_base
+  db=setup_db
 
   appname=mysql_escape(params[:appname])
   expires=mysql_escape(params[:expires])
