@@ -52,6 +52,17 @@ function updateSummaries()
   });
 }
 
+function delayStatus(appname,timeframe)
+{
+  var loadUrl = ["http://",location.host,":4567/delaystatus/?expires=",timeframe,"&appname=",appname].join("");
+
+  $.getJSON( loadUrl, function( data ) {
+    // do nothing
+  });
+
+  resetOverview(); //Refresh the view
+}
+
 
 function callhistory(history_name)
 {
@@ -68,6 +79,17 @@ function resetOverview()
 function fnRowCallback( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
   var buffer = [ "<a href=javascript:callhistory('",aData[0],"')>",aData[0],"</a>"];
   $('td:eq(0)', nRow).html( buffer.join("") );
+  $('td:eq(8)', nRow).html( 
+
+	[
+	  "<a href=javascript:delayStatus('",aData[0],"',3600)>1</a>|",
+	  "<a href=javascript:delayStatus('",aData[0],"',21600)>6</a>|",
+	  "<a href=javascript:delayStatus('",aData[0],"',43200)>12</a>|",
+	  "<a href=javascript:delayStatus('",aData[0],"',86400)>24</a>|",
+	  "<a href=javascript:delayStatus('",aData[0],"',172800)>48</a>|"
+	].join("") 
+
+);
 
   // Bold the grade for all 'A' grade browsers
   if ( aData[6] == "R" )
