@@ -92,25 +92,15 @@ def setstatus_base
 
 
   #Is the monitor suspended? If so, do not override the suspension
-puts
-puts
-puts
-puts "Checking Last Status"
   sql = "select id,status,status_text,TIMESTAMPDIFF(SECOND,lastupdated,now()) from monitors where id='#{appname}' and expires > now()"
-puts sql
   results=db.query(sql)
   results.each do |row|
-    puts 
     if (row[1] == "S")
    	status_text = "Monitor Turned Off. Last update suppressed Status=#{status} Text=#{status_text}"	
       	status="S"
 	expires_sql="expires" #don't update expires field. Set it to itself in SQL
     end
   end
-    puts 
-    puts 
-    puts 
-  
    
  
   #Create SQL Query for main monitor table  
