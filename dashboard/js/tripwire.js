@@ -52,9 +52,9 @@ function updateSummaries()
   });
 }
 
-function delayStatus(appname,timeframe)
+function suspendStatus(appname,timeframe)
 {
-  var loadUrl = ["http://",location.host,":4567/delaystatus/?expires=",timeframe,"&appname=",appname].join("");
+  var loadUrl = ["http://",location.host,":4567/suspendstatus/?expires=",timeframe,"&appname=",appname].join("");
 
   $.getJSON( loadUrl, function( data ) {
     // do nothing
@@ -82,11 +82,11 @@ function fnRowCallback( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
   $('td:eq(8)', nRow).html( 
 
 	[
-	  "<a href=javascript:delayStatus('",aData[0],"',3600)>1</a>|",
-	  "<a href=javascript:delayStatus('",aData[0],"',21600)>6</a>|",
-	  "<a href=javascript:delayStatus('",aData[0],"',43200)>12</a>|",
-	  "<a href=javascript:delayStatus('",aData[0],"',86400)>24</a>|",
-	  "<a href=javascript:delayStatus('",aData[0],"',172800)>48</a>|"
+	  "<a href=javascript:suspendStatus('",aData[0],"',3600)>1</a>|",
+	  "<a href=javascript:suspendStatus('",aData[0],"',21600)>6</a>|",
+	  "<a href=javascript:suspendStatus('",aData[0],"',43200)>12</a>|",
+	  "<a href=javascript:suspendStatus('",aData[0],"',86400)>24</a>|",
+	  "<a href=javascript:suspendStatus('",aData[0],"',172800)>48</a>|"
 	].join("") 
 
 );
@@ -101,6 +101,9 @@ function fnRowCallback( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
     }else if (aData[6] == "G" )
     {
       $(nRow).css('background-color', '#DDFFDD'); // GREEN
+    }else if (aData[6] == "S" )
+    {
+      $(nRow).css('background-color', '#D9EDF7'); // BLUE
     }else {
       $(nRow).css('background-color', '#DDDDDD'); // GRAY
     }
