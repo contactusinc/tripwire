@@ -86,13 +86,39 @@ def setstatus_base
   if expires.nil? || expires.empty?
       expires="86400"
   end
-    
+
+  expires_sql = "DATE_ADD(now() , INTERVAL #{expires} SECOND)"
+
+
+
+  #Is the monitor suspended? If so, do not override the suspension
+puts
+puts
+puts
+puts "Checking Last Status"
+  sql = "select id,status,status_text,TIMESTAMPDIFF(SECOND,lastupdated,now()) from monitors where id='#{appname}' and expires > now()"
+puts sql
+  results=db.query(sql)
+  results.each do |row|
+    puts 
+    if (row[1] == "S")
+   	status_text = "Monitor Turned Off. Last update suppressed Status=#{status} Text=#{status_text}"	
+      	status="S"
+	expires_sql="expires" #don't update expires field. Set it to itself in SQL
+    end
+  end
+    puts 
+    puts 
+    puts 
+  
+   
+ 
   #Create SQL Query for main monitor table  
   sql = "
 	insert into monitors (id,lastupdated,expires,status,status_text,description,category,customer) values(
 	      	'#{appname}',
   	      	NOW(),
-    	      	DATE_ADD(now() , INTERVAL #{expires} SECOND),
+    	      	#{expires_sql},
 	      	'#{status}',
 	      	'#{status_text}',
 	      	'#{description}',
@@ -101,7 +127,7 @@ def setstatus_base
     	)
     	ON DUPLICATE KEY UPDATE
       		lastupdated=now(),
-      		expires=DATE_ADD(now() , INTERVAL #{expires} SECOND),
+      		expires=#{expires_sql},
       		status='#{status}',
      		status_text='#{status_text}'"
 
