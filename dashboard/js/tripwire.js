@@ -18,6 +18,7 @@ function datatableAjaxRequest(url)
                 "sPaginationType": "full_numbers",
                 //"bServerSide": true,
                 "sAjaxSource": url,
+		"iDisplayLength": 250,
 		"aaSorting": [[ 0, "asc" ]],
                 "fnServerData": function( sUrl, aoData, fnCallback ) {
                         $.ajax( {

@@ -256,6 +256,7 @@ get '/getsummaryjson/' do
   result['Y']="0"
   result['G']="0"
   result['I']="0"
+  result['S']="0"
 
   sql = "select status, count(*) from monitors group by status" 
   db=setup_db
