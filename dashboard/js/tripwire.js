@@ -55,13 +55,17 @@ function updateSummaries()
 
 function suspendStatus(appname,timeframe)
 {
-  var loadUrl = ["http://",location.host,":4567/suspendstatus/?expires=",timeframe,"&appname=",appname].join("");
 
-  $.getJSON( loadUrl, function( data ) {
-    // do nothing
-  });
+var didConfirm = confirm(["Suspending '",appname,"' will cause the system to stop monitoring '",appname,"' for the ",timeframe," seconds. Are you sure?"].join(""));
+  if (didConfirm == true) {
+    var loadUrl = ["http://",location.host,":4567/suspendstatus/?expires=",timeframe,"&appname=",appname].join("");
 
-  resetOverview(); //Refresh the view
+    $.getJSON( loadUrl, function( data ) {
+      // do nothing
+    });
+
+    resetOverview(); //Refresh the view
+  }
 }
 
 
@@ -77,19 +81,26 @@ function resetOverview()
   $('#datatb').dataTable().fnReloadAjax();
 }
 
+
+function showSuspendForRow(id,div_name)
+{
+
+ html = [
+          "<a href=javascript:suspendStatus('",id,"',3600)>1</a>|",
+          "<a href=javascript:suspendStatus('",id,"',21600)>6</a>|",
+          "<a href=javascript:suspendStatus('",id,"',43200)>12</a>|",
+          "<a href=javascript:suspendStatus('",id,"',86400)>24</a>|",
+          "<a href=javascript:suspendStatus('",id,"',172800)>48</a>|"
+        ].join("");
+  $("#"+div_name).html(html);
+
+}
+
 function fnRowCallback( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
   var buffer = [ "<a href=javascript:callhistory('",aData[0],"')>",aData[0],"</a>"];
   $('td:eq(0)', nRow).html( buffer.join("") );
   $('td:eq(8)', nRow).html( 
-
-	[
-	  "<a href=javascript:suspendStatus('",aData[0],"',3600)>1</a>|",
-	  "<a href=javascript:suspendStatus('",aData[0],"',21600)>6</a>|",
-	  "<a href=javascript:suspendStatus('",aData[0],"',43200)>12</a>|",
-	  "<a href=javascript:suspendStatus('",aData[0],"',86400)>24</a>|",
-	  "<a href=javascript:suspendStatus('",aData[0],"',172800)>48</a>|"
-	].join("") 
-
+	["<span id='suspend_",aData[0],"'><a href=javascript:showSuspendForRow('",aData[0],"','suspend_",aData[0],"')>Show Options</a></span>"].join("")
 );
 
   // Bold the grade for all 'A' grade browsers
