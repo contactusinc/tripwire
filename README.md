@@ -22,3 +22,46 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+
+
+--
+-- Table structure for table `monitors`
+--
+
+DROP TABLE IF EXISTS `monitors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `monitors` (
+  `id` varchar(50) NOT NULL,
+  `lastupdated` datetime DEFAULT NULL,
+  `expires` datetime DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `status_text` varchar(100) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `customer` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `monitors_history`
+--
+
+DROP TABLE IF EXISTS `monitors_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `monitors_history` (
+  `ident` int(11) NOT NULL AUTO_INCREMENT,
+  `monitor_id` varchar(50) DEFAULT NULL,
+  `lastupdated` datetime DEFAULT NULL,
+  `expires` datetime DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `status_text` varchar(100) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `customer` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ident`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
